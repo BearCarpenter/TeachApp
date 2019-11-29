@@ -1,0 +1,26 @@
+version: "3"
+services:
+  app-dotnet-container:
+    build: .
+    networks:
+      - app-network
+    ports:
+      - "5000:5000"
+    
+  app-nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app-network
+    tty: true
+    entrypoint: /bin/sh
+    # tutaj jest coś nie tak. kolejność powinna być taka montowanie -> przeniesienie -> podlinkowanie -> odpalenie
+    command: -c "ls -A /nginx || mv /etc/nginx/* /nginx  && rm -rf /etc/nginx && ln -sf /nginx /etc/nginx && nginx -g 'daemon off;'"
+    volumes:
+      - C:\Users\Jakub\Desktop\workspace\frontlogger-nginx-config:/nginx
+
+networks:
+  app-network:
+    driver: bridge
