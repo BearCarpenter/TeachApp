@@ -2,38 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Storage;
 
 namespace frontlogger.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class SampleController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<SampleController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public SampleContext _context { get; }
+
+        public SampleController(ILogger<SampleController> logger, SampleContext context)
         {
             _logger = logger;
+            this._context = context;
+
+            if (_context.Samples.Count() == 0)
+            {
+                _context.Samples.Add(new Sample { Title = "Item1" });
+                _context.SaveChanges();
+            }
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<Sample> Get()
         {
-            var rng = new Random();
-            var x = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var x = _context.Samples.ToArray();
             _logger.LogError("{@x}", x);
             return x;
         }

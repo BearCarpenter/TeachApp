@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0.101-buster
 
 EXPOSE 8080
 
@@ -8,4 +8,4 @@ COPY . /app
 
 RUN dotnet restore && dotnet build
 
-ENTRYPOINT dotnet run
+ENTRYPOINT dotnet run -p frontlogger/frontlogger.csproj

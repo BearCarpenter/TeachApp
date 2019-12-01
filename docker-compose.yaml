@@ -1,25 +1,44 @@
-version: "3"
+version: "3.7"
 services:
-  app-dotnet-container:
+  app-dotnet-cntr:
+    container_name: app-dotnet-cntr
     build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - C:\front-logger-volumes\front-logger-settings:/settings
     networks:
       - app-network
+    depends_on:
+      - postgres-cntr
+
+  postgres-cntr:
+    container_name: postgres-cntr
+    image: postgres:12.1
+    environment:
+      - POSTGRES_PASSWORD=docker
     ports:
-      - "5000:5000"
-    
-  app-nginx:
-    image: nginx:alpine
+      - "5432:5432"
+    volumes:
+      - C:\front-logger-volumes\postgresql:/var/lib/postgresql
+    networks:
+      - app-network
+
+  app-nginx-cntr:
+    container_name: app-nginx-cntr
+    image: nginx:1.17.6-alpine
     ports:
       - "80:80"
       - "443:443"
-    networks:
-      - app-network
     tty: true
     entrypoint: /bin/sh
-    # tutaj jest coś nie tak. kolejność powinna być taka montowanie -> przeniesienie -> podlinkowanie -> odpalenie
-    command: -c "ls -A /nginx || mv /etc/nginx/* /nginx  && rm -rf /etc/nginx && ln -sf /nginx /etc/nginx && nginx -g 'daemon off;'"
+    command: -c "mv /etc/nginx/* /nginx && sleep 3 && rm -rf /etc/nginx && ln -sf /nginx /etc/nginx && nginx -g 'daemon off;'"
     volumes:
-      - C:\Users\Jakub\Desktop\workspace\frontlogger-nginx-config:/nginx
+      - C:\front-logger-volumes\nginx-config:/nginx
+    networks:
+      - app-network
+    depends_on:
+      - app-dotnet-cntr
 
 networks:
   app-network:
