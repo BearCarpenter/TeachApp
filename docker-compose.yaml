@@ -1,17 +1,5 @@
 version: "3.7"
 services:
-  app-dotnet-cntr:
-    container_name: app-dotnet-cntr
-    build: .
-    ports:
-      - "8080:8080"
-    volumes:
-      - C:\front-logger-volumes\front-logger-settings:/settings
-    networks:
-      - app-network
-    depends_on:
-      - postgres-cntr
-
   postgres-cntr:
     container_name: postgres-cntr
     image: postgres:12.1
@@ -24,6 +12,30 @@ services:
     networks:
       - app-network
 
+  app-dotnet-cntr:
+    container_name: app-dotnet-cntr
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - C:\front-logger-volumes\front-logger-settings:/settings
+    networks:
+      - app-network
+    depends_on:
+      - postgres-cntr
+
+  app-angular:
+    container_name: app-angular
+    build: AngularApp/.
+    ports:
+      - "4200:4200"
+    volumes:
+      - C:\Users\Jakub\Desktop\workspace\frontlogger\AngularApp:/app
+    networks:
+      - app-network
+    depends_on:
+      - app-dotnet-cntr
+
   app-nginx-cntr:
     container_name: app-nginx-cntr
     image: nginx:1.17.6-alpine
@@ -32,14 +44,14 @@ services:
       - "443:443"
     tty: true
     entrypoint: /bin/sh
-    command: -c "mv /etc/nginx/* /nginx && sleep 3 && rm -rf /etc/nginx && ln -sf /nginx /etc/nginx && nginx -g 'daemon off;'"
+    command: -c "sleep 3 && mv /etc/nginx/* /nginx || sleep 3 && rm -rf /etc/nginx && ln -sf /nginx /etc/nginx && nginx -g 'daemon off;'"
     volumes:
       - C:\front-logger-volumes\nginx-config:/nginx
     networks:
       - app-network
     depends_on:
-      - app-dotnet-cntr
-
+      - app-angular
+    
 networks:
   app-network:
     driver: bridge
