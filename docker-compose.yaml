@@ -8,50 +8,50 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - C:\front-logger-volumes\postgresql:/var/lib/postgresql
+      - C:\teach-volumes\postgresql:/var/lib/postgresql
     networks:
-      - app-network
+      - teach-network
 
-  app-dotnet-cntr:
-    container_name: app-dotnet-cntr
-    build: .
+  dotnet-api-cntr:
+    container_name: dotnet-api-cntr
+    build: NetApi/.
     ports:
       - "8080:8080"
     volumes:
-      - C:\front-logger-volumes\front-logger-settings:/settings
+      - C:\teach-volumes\teach-net-settings:/settings
     networks:
-      - app-network
+      - teach-network
     depends_on:
       - postgres-cntr
 
-  app-angular:
-    container_name: app-angular
+  angular-app-cntr:
+    container_name: angular-app-cntr
     build: AngularApp/.
     ports:
       - "4200:4200"
     volumes:
-      - C:\Users\Jakub\Desktop\workspace\frontlogger\AngularApp:/app
+      - ./AngularApp:/app
+    # entrypoint: /bin/bash
+    # command: "-c 'sleep 3600'"
     networks:
-      - app-network
+      - teach-network
     depends_on:
-      - app-dotnet-cntr
+      - dotnet-api-cntr
 
-  app-nginx-cntr:
-    container_name: app-nginx-cntr
-    image: nginx:1.17.6-alpine
+  nginx-teach-cntr:
+    container_name: nginx-teach-cntr
+    build: nginx/.
     ports:
       - "80:80"
       - "443:443"
     tty: true
-    entrypoint: /bin/sh
-    command: -c "sleep 3 && mv /etc/nginx/* /nginx || sleep 3 && rm -rf /etc/nginx && ln -sf /nginx /etc/nginx && nginx -g 'daemon off;'"
     volumes:
-      - C:\front-logger-volumes\nginx-config:/nginx
+      - ./nginx/conf:/nginx
     networks:
-      - app-network
+      - teach-network
     depends_on:
-      - app-angular
+      - angular-app-cntr
     
 networks:
-  app-network:
+  teach-network:
     driver: bridge

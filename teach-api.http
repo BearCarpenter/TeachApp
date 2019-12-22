@@ -1,0 +1,65 @@
+@apiUrl = http://localhost
+@identityServiceUrl = http://localhost:10000
+
+@username = user1
+@password = 60A5D3E4100FE8AFA5EE0103739A45711D50D7F3BA7280D8A95B51F5D04AA4B8
+
+### register
+POST {{identityServiceUrl}}/api/user/register
+content-type: application/json
+
+{
+    "username":"{{username}}",
+    "password":"{{password}}",
+    "email":"example@ex.com",
+    "firstName":"firstNam",
+    "lastName": "lastName"
+}
+
+### Login
+POST {{identityServiceUrl}}/connect/token
+content-type: application/x-www-form-urlencoded
+
+client_id=85a8d3b924e7d23ff6d6d1961a3adc21
+&client_secret=secret
+&grant_type=password
+&password={{password}}
+&username={{username}}
+
+@accessToken = eyJhbGciOiJSUzI1NiIsImtpZCI6ImEzMzg4MmVkMTE2ODViZDNjNDRmNzgyNTM0YTViOTcwIiwidHlwIjoiSldUIn0.eyJuYmYiOjE1NjAwMDYwODcsImV4cCI6MTU2MDAwOTY4NywiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDoxMDAwMCIsImF1ZCI6WyJodHRwOi8vbG9jYWxob3N0OjEwMDAwL3Jlc291cmNlcyIsInBjYiJdLCJjbGllbnRfaWQiOiI4NWE4ZDNiOTI0ZTdkMjNmZjZkNmQxOTYxYTNhZGMyMSIsInN1YiI6ImMwNmVlZmE1LTI4N2ItNDczOC05NzQxLTA4ZDZlMjBjYmIyYSIsImF1dGhfdGltZSI6MTU2MDAwNjA4NywiaWRwIjoibG9jYWwiLCJnaXZlbl9uYW1lIjoic3RyaW5nIiwiZmFtaWx5X25hbWUiOiJzdHJpbmciLCJlbWFpbCI6ImV4YW1wbGVAZW1haWwuY29tIiwibmlja25hbWUiOiJ1c2VyMSIsInNjb3BlIjpbInBjYiJdLCJhbXIiOlsiY3VzdG9tIl19.lyHpBaq2TMesnAJPGGEa7l-8xlfwQA7mTzouVDqtG4N0CJ_W327uuNUFZtziAcTiSpmnK2XpwxsrpR-jNUD8oKV1EE98qfahCsTfHU4vdWNF-PIqBJ6WA80u_7aYIwweGoFlWKyTNSXaW6pV3S9GTuAHtsk4UcviF17tWKESe9acZceu4aLJ1OxxBC1XRm8PYk85gJM9bHUgc93el5SJd5n-deMCQwIOhHIxua3S90tRonDRPW6DC1p_6R6Foesk0WK9UTjbYfTVlqjecBCQediZjeNzeQZCMUbkL7UgRvt7Hx0RgaWThV5jgZfBMM6InOOE1xf9RO4D520B8UbD7A
+@refreshToken = xxxxxxxxxxxxxxxxxx
+
+### get all samples
+GET {{apiUrl}}/api
+
+### Add sample
+POST {{apiUrl}}/api/sample
+authorization: Bearer {{accessToken}}
+content-type: application/json
+
+{
+	"title": "x4"
+}
+
+@postId = 8285955f-8179-4211-32d1-08d6e47cd728
+
+### change state of sample
+PUT {{apiUrl}}/api/sample
+authorization: Bearer {{accessToken}}
+content-type: application/json
+
+{
+}
+
+### edit sample
+PUT {{apiUrl}}/api/sample/100
+authorization: Bearer {{accessToken}}
+content-type: application/json
+
+{
+	"title": "x5"
+}
+
+### delete post
+DELETE {{apiUrl}}/api/sample/4074
+authorization: Bearer {{accessToken}}

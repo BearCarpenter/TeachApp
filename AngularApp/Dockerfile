@@ -1,11 +1,11 @@
-FROM node:13.1.0-buster AS deps
+FROM node:12.14.0-buster AS deps
 
 WORKDIR /deps
 
 COPY ./package.json .
 
-RUN npm install
-
+RUN npm cache clean --force && npm install
+# npm install -g npm && npm cache clean --force && npm cache verify &&
 # node_module install:
 FROM angular/ngcontainer:0.10.0 AS base
 
@@ -21,4 +21,4 @@ WORKDIR /app
 
 ENTRYPOINT sudo ln -sf /deps/node_modules . \
 && sudo cp /deps/package-lock.json . \
-&& ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0
+&& ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --poll 1
