@@ -1,10 +1,10 @@
-FROM node:12.14.0-buster AS deps
+FROM  jojons/teach-app-modules:0.1 AS deps
 
-WORKDIR /deps
+# FROM node:12.14.0-buster AS deps
+# WORKDIR /deps
+# COPY ./package.json .
+# RUN npm cache clean --force && npm install
 
-COPY ./package.json .
-
-RUN npm cache clean --force && npm install
 # npm install -g npm && npm cache clean --force && npm cache verify &&
 # node_module install:
 FROM angular/ngcontainer:0.10.0 AS base

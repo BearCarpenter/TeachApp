@@ -1,0 +1,4 @@
+FROM node:12.14.0-buster AS deps
+WORKDIR /deps
+COPY ./package.json .
+RUN npm cache clean --force && npm install
