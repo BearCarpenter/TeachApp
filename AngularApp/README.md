@@ -1,27 +1,74 @@
-# AngularApp
+# Teach-app angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
+## Uruchomienie aplikacji angularowej
 
-## Development server
+Aplikacja teach-app oparta jest o open sourcowy projekt ngx-admin:
+```
+https://github.com/akveo/ngx-admin
+```
+W powyższym repozytorium ngx-admin znajdują się dwa istotne z punktu widzenia aplikacji teach-app branche: 
+- master - zawierający aplikację demo z wieloma komponentami i ich przykładowym wykorzystaniem
+- starter - zawierający czysty template do którego można dokładać dowolne komponenty 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Na bazie powyższego repozytorium został utworzony fork 
+```
+https://github.com/BearCarpenter/ngx-admin
+```
+a w nim dwa analogiczne branche:
+- feature/docker-master 
+- feature/docker-starter
 
-## Code scaffolding
+wychodzą one z w.w. branchy master i starter do których dodano pliki umożliwiające uruchomienie aplikacji ngx-admin w dockerze
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+W zdalnym repozytorium dockerowym:
+```
+https://hub.docker.com/u/jojons
+```
+znajdują się obrazy utworzone na bazie plików z powyższych branchy, które następnie służą do uruchamiania kontenera na twoim komputerze:
+W zdalnym repozytorium znajdują się obrazy:
+- jojons/ngx-admin-modules:starter
+- jojons/ngx-admin-modules:master
 
-## Build
+Są to obrazy, które poprostu mają przechowywać spójną wersję node-modules oraz package-lock.json, od których zależy kolejne odpalenie aplikacji. 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Odpalenie aplikacji
+W celu odpalenia aplikacji w linii komend w folderze z aplikacją należy wykonać:
+```
+docker-compose up
+# W rożnych sytuacjach może być zasadne użycie flagi --build
+```
+Plik docker-compose.yaml na bazie pliku Dockerfile buduje obraz umożliwiający odpalenie lokalnie aplikacji.
 
-## Running unit tests
+Na początku pobiera obraz wewnątrz którego znajdują się pobrane node_modules:
+```
+jojons/ngx-admin-modules:starter
+```
+następnie przekopiowuje z niego ten folder do kolejnego obrazu który jest w stanie uruchamiać naszą aplikację angularową. Sam kod aplikacji jest podmontowany do odpalonego kontenera dzięki czemu można dokonywać zmian w kodzie z pominięciem środowiska aplikacji. Po odpaleniu kontenera w katalogu z aplikacją pojawi się link/skrót który wewnątrz kontenera odwołuje się do prawdziwego folderu node_modules. 
+Aplikacja jest hostowana na porcie 4200.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Praca developerska
+Praca developerska odbywa się poprzez podłączenie vscode do środka kontenera. Jest to wymagane ponieważ na systemie hosta nie istnieje katalog node_modules przez co programowanie w vscode jest prawie nie możliwe (podkreśla na czerwono większość importów z node_modules a co za tym idzie również kod).
 
-## Running end-to-end tests
+W celu developowania należy:
+1. zainstalować dodatek do vscode o nazwie 'Remote Development'
+2. Odpalić kontener - patrz powyższy rozdział "Odpalenie aplikacji"
+3. Kliknąć na zielony przycisk w lewym dolnym i z opcji wybrać 'Attach to Runinng Container'
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+To powinno odpalić nową instancję vscode podłączoną do uruchomionego kontenera
 
-## Further help
+## Aktualizowanie package.json i node_modules
+Odpalenie kontenera z aplikacją oparte jest o wcześniejsze przekopiowanie folderu node_modules z obrazu kontenera który już zawiera pobrane paczki. Dodanie nowego wpisu np z kolejną biblioteką do package.json nie spowoduje tego że będzie ona dostępna w kontenerze z aplikacją ponieważ w obrazie przechowującym node_modules nie zostały one zaktualiowane.
+Jeśli chcesz zaaktualizować node_modules musisz zaktualizować obraz przechowujący node_modules, a więc powinieneś:
+1. wyłączyć działający kontener z aplikacją.
+2. zaktualizować package.json o wpisy które chcesz zmienić.
+3. wykonać w linii komend:
+```
+docker build -t jojons/ngx-admin-modules:[master/starter] -f Dockerfile.ngx-admin-modules . 
+```
+spowoduje to zbudowanie obrazu z nowymi zaktualizowanymi node_modules, które w przyszłości będą przekopiowane w momencie odpalania kontenera z aplikacją.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+4. wypchnąć ten obraz na zdalne repozytorium dockera:
+```
+docker push jojons/ngx-admin-modules:[master/starter]
+```
+5. odpalić ponownie kontener
