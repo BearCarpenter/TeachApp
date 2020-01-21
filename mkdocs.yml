@@ -1,0 +1,15 @@
+# Project information
+site_name: 'Teach-app'
+site_url: 'https://teach-app.tk/docs'
+repo_url: https://github.com/BearCarpenter/TeachApp
+# Copyright
+copyright: 'Copyright &copy; 2020 jakwer & BearCarpenter'
+
+#Configuration
+theme: readthedocs
+nav:
+  - 'Witaj': 'index.md'
+  - 'Zaczynamy!':
+      - 'Pisanie dokumentacji' : 'getting-started/create-docs.md'
+      - 'Angular Start!': 'getting-started/start-angular.md'
+      - 'Praca z gitem': 'getting-started/git-work.md'
