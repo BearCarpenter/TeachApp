@@ -1,0 +1,1 @@
+Dokumentacja biznesowa aplikacji teach-app
