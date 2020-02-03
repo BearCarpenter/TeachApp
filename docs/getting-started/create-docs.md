@@ -11,6 +11,12 @@ docker run --rm -it -v ${PWD}:/docs squidfunk/mkdocs-material:4.6.0 new .
 ```
 docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material:4.6.0
 ```
+
+Przy czym gdy korzystamy z Dockera poprzez VirtualBoxa, powinniśmy wywołać następującą komendę:
+```
+docker run --rm -it -p 8000:8000 -v /TeachApp/:/docs squidfunk/mkdocs-material:4.6.0
+```
+
 następnie wejdź pod:
 ```
 http://localhost:8000

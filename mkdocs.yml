@@ -13,3 +13,7 @@ nav:
       - 'Pisanie dokumentacji' : 'getting-started/create-docs.md'
       - 'Angular Start!': 'getting-started/start-angular.md'
       - 'Praca z gitem': 'getting-started/git-work.md'
+  - 'Dokumentacja techniczna':
+      - 'Etap I' : 'domain-docs/step1.md'
+      - 'Etap II' : 'domain-docs/step2.md'
+      - 'Etap III' : 'domain-docs/step3.md'
