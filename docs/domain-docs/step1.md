@@ -76,6 +76,8 @@ Wybranie daty lekcji:
 Poprzez przełożenie terminu lekcji rozumiemy zmianę daty pojedynczej lekcji (z możliwością zmiany jej długości). Wszystkie inne atrybuty informacji o lekcji zostaną zachowane. Przy przekładaniu lekcji będzie pojawiało się okno modalne z kalendarzem, który będzie pokazywał wszystkie lekcje zalogowanego nauczyciela. Aktywna (możliwa do edycji) będzie tylko lekcja którą przekładamy.
 
 ####Tablica walidacyjna
+| Tablica walidacyjna|
+|-------------------------------------------------------------------------------------------------------------------------------------|
 |If ((startDate AFTER anyLessonStartDateThisUser) AND ((startDate BEFORE anyLessonStartDateThisUser + anyLessonLengthThisUser)))|
 |If ((startDate + lengthInMinutes AFTER anyLessonStartDateThisUser) AND ((startDate + lengthInMinutes BEFORE anyLessonStartDateThisUser + anyLessonLengthThisUser)))|
 
@@ -83,10 +85,45 @@ W dwóch ostatnich warunkach chodzi o to, że nauczyciel nie może przełożyć 
 
 ##Kalendarz nauczyciela
 
-Kalendarz ucznia będzie umożliwiał wykonywanie czynności CRUD na informacjach o lekcjach przypisanych do zalogowanego nauczyciela.
+Kalendarz nauczyciela będzie umożliwiał wykonywanie czynności CRUD na informacjach o lekcjach przypisanych do zalogowanego nauczyciela.
 
 ####Makiety
 ![DayCalendarMockup](/img/domain-docs/calendar/calendarDayMockup.jpg)
 ![WeekCalendarMockup](/img/domain-docs/calendar/calendarWeekMockup.jpg)
 
-###Logowanie i rejestracja administratora
+###Rejestracja nauczyciela
+
+####Schemat DTO
+
+![RegisterTeacherDto](/img/domain-docs/registerTeacher/registerTeacherDto.PNG)
+
+####Tablica walidacyjna
+| Tablica walidacyjna|
+|-------------------------------------------------------------------------------------------------------------------------------------|
+|If (email is on db)|
+|If ((password.length < 6) OR ((anyLettersOfPassword != specialChar)))|
+|Standard email validation|
+|firstName -> req|
+|lastName -> req|
+|subject -> 1 *...|
+|email -> req|
+|password -> req|
+
+####Diagram aktywności
+![RegisterTeacherActivityDiagram](/img/domain-docs/registerTeacher/registerTeacherActivityDiagramDto.PNG)
+####Makiety
+![RegisterTeacherMockup](/img/domain-docs/registerTeacher/registerTeacherMockup.png)
+
+###Logowanie nauczyciela
+
+####Schemat DTO
+
+![RegisterTeacherDto](/img/domain-docs/loginTeacher/loginTeacherDto.PNG)
+
+####Tablica walidacyjna
+
+| Tablica walidacyjna|
+|-------------------------------------------------------------------------------------------------------------------------------------|
+|email req|
+|password req|
+|If (password != usersPasswordFromDb)
