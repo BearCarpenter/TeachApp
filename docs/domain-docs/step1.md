@@ -14,18 +14,18 @@ Będą to:
 ##Wyświetlenie informacji o wszystkich uczniach
 Zostaną pobrane wyłącznie informacje o uczniach przyporządkowanych do zalogowanego usera (admina).
 ####Schemat DTO 
-![GetStudentsDto](/img/domain-docs/getStudents/getStudentsResDto.PNG)
+![GetStudentsDto](../img/domain-docs/getStudents/getStudentsResDto.PNG)
 
 ####Pobieranie regularności ucznia
 Regularność uczęszczania ucznia na zajęcia będzie wyznaczana poniższym algorytmem:
-![ChooseRegularity](/img/domain-docs/getStudents/chooseRegularity.PNG)
+![ChooseRegularity](../img/domain-docs/getStudents/chooseRegularity.PNG)
 
 ####Makiety
-![GetStudentsMockup](/img/domain-docs/getStudents/getStudentsMockup.jpg)
+![GetStudentsMockup](../img/domain-docs/getStudents/getStudentsMockup.jpg)
 
 ##Dodanie informacji o uczniu
 ####Schemat DTO 
-![AddStudentDto](/img/domain-docs/addStudent/AddStudentDto.png)
+![AddStudentDto](../img/domain-docs/addStudent/AddStudentDto.png)
 <br>
 eduLevel – Dictionary_01
 <br>
@@ -33,14 +33,14 @@ subject – Dictionary_02
 <br>
 periodOption: 1 – ones per week, 2 – ones per 2 weeks
 ####Diagram aktywności
-![AddStudentActivityDiagram](/img/domain-docs/addStudent/AddStudentActivityDiagram.PNG)
+![AddStudentActivityDiagram](../img/domain-docs/addStudent/AddStudentActivityDiagram.PNG)
 ####Tablica walidacyjna
 | Tablica walidacyjna|
 |-------------------------------------------------------------------------------------------------------------------------------------|
 | lastName -> required    |
 
 ####Makiety
-![AddStudentMockup](/img/domain-docs/addStudent/AddStudentMockup.PNG)
+![AddStudentMockup](../img/domain-docs/addStudent/AddStudentMockup.PNG)
 
 ##Edycja informacji o uczniu
 
@@ -50,7 +50,7 @@ Edycja ucznia odbędzie się w taki sam sposób jak jego dodanie, z tym że w re
 Dodanie informacji o lekcjach ucznia będzie wykonywane z poziomu dodania/edycji ucznia. Będzie to oddzielny request, który zostanie wywołany po sprawdzeniu, czy AddLessonReqDto != null.
 
 ####Schemat DTO
-![AddStudentDto](/img/domain-docs/addLesson/DodajLekcjeDto.png)
+![AddStudentDto](../img/domain-docs/addLesson/DodajLekcjeDto.png)
 
 ####Tablica walidacyjna
 | Tablica walidacyjna|
@@ -63,7 +63,7 @@ Dodanie informacji o lekcjach ucznia będzie wykonywane z poziomu dodania/edycji
 W dwóch ostatnich warunkach chodzi o to, że nauczyciel nie może dodać lekcji, jeżeli w tym terminie ma już inną lekcję.
 
 ####Makiety
-![AddStudentDto](/img/domain-docs/addLesson/AddLessonMockup.PNG)
+![AddStudentDto](../img/domain-docs/addLesson/AddLessonMockup.PNG)
 
 
 Wybranie daty lekcji:
@@ -88,8 +88,8 @@ W dwóch ostatnich warunkach chodzi o to, że nauczyciel nie może przełożyć 
 Kalendarz nauczyciela będzie umożliwiał wykonywanie czynności CRUD na informacjach o lekcjach przypisanych do zalogowanego nauczyciela.
 
 ####Makiety
-![DayCalendarMockup](/img/domain-docs/calendar/calendarDayMockup.jpg)
-![WeekCalendarMockup](/img/domain-docs/calendar/calendarWeekMockup.jpg)
+![DayCalendarMockup](../img/domain-docs/calendar/calendarDayMockup.jpg)
+![WeekCalendarMockup](../img/domain-docs/calendar/calendarWeekMockup.jpg)
 
 ###Rejestracja nauczyciela
 
