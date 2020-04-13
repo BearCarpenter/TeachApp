@@ -8,7 +8,7 @@ docker-compose up
 ```
 lub
 ```
-docker run --rm -it -p 4200:4200 -v ${PWD}:/app  teach-app-npm-executor
+docker run --rm -it -p 4200:4200 -v ${PWD}:/app --name teach-app-angular teach-app-npm-executor
 ```
 # Praca developerska
 Praca developerska odbywa się poprzez podłączenie vscode do środka kontenera. Jest to wymagane ponieważ na systemie hosta nie istnieje katalog node_modules przez co programowanie w vscode jest prawie nie możliwe (podkreśla na czerwono większość importów z node_modules a co za tym idzie również kod).

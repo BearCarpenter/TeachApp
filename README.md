@@ -5,6 +5,10 @@ docker-compose up
 ewentualnie w przypadku konieczności ponownego przebudowania obrazów:
 docker-compose up --build
 ```
+jeśli chcesz uruchomić samą bazę danych:
+```
+docker-compose -f .\docker-copmose.db.yaml up 
+```
 ## Dostępność serwisów po uruchomieniu
 aplikacja angularowa powinna być dostępna pod adresem:
 ```

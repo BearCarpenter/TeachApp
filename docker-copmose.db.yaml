@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  postgres-cntr:
+    container_name: postgres-cntr
+    image: postgres:12.1
+    environment:
+      - POSTGRES_PASSWORD=docker
+    ports:
+      - "5432:5432"
+    volumes:
+      - C:\teach-volumes\postgresql:/var/lib/postgresql
+    networks:
+      - teach-network
+    
+networks:
+  teach-network:
+    driver: bridge

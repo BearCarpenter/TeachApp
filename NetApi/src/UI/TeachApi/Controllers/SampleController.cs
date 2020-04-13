@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Storage;
 
 namespace TeachApi.Controllers
@@ -17,10 +18,11 @@ namespace TeachApi.Controllers
         private readonly ILogger<SampleController> _logger;
 
         public SampleContext _context { get; }
-
-        public SampleController(ILogger<SampleController> logger, SampleContext context)
+        private readonly IOptions<AppSettings> config;
+        public SampleController(ILogger<SampleController> logger, SampleContext context, IOptions<AppSettings> config)
         {
             _logger = logger;
+            this.config = config;
             this._context = context;
 
             if (_context.Samples.Count() == 0)
@@ -36,6 +38,13 @@ namespace TeachApi.Controllers
             var x = _context.Samples.ToArray();
             _logger.LogError("{@x}", x);
             return x;
+        }
+
+        [HttpGet]
+        [Route("GetSampleData")]
+        public string GetSampleData()
+        {
+            return  "jakieś dane z backendu33";
         }
     }
 }

@@ -1,7 +1,7 @@
 version: "3.7"
 services:
-  ngx-admin-cntr:
-    container_name: ngx-admin-cntr
+  teach-app-angular:
+    container_name: teach-app-angular
     build: .
     ports:
       - "4200:4200"
@@ -10,8 +10,8 @@ services:
     # entrypoint: /bin/bash
     # command: "-c 'sleep 3600'"
     networks:
-      - ngx-admin-network
+      - teach-app-angular-network
 
 networks:
-  ngx-admin-network:
+  teach-app-angular-network:
     driver: bridge
