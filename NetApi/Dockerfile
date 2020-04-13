@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1.100-buster
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1.100 as sdk
 
 EXPOSE 8080
 
@@ -6,6 +6,14 @@ WORKDIR /app
 
 COPY . /app
 
-RUN dotnet restore && dotnet build
+RUN dotnet restore
 
-ENTRYPOINT dotnet run -p src/UI/TeachApi/TeachApi.csproj
+RUN dotnet publish -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1.0 AS runtime
+
+WORKDIR /app
+
+COPY --from=sdk /app/out .
+
+ENTRYPOINT ["dotnet", "TeachApi.dll"]
