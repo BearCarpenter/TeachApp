@@ -22,5 +22,11 @@
     <ProjectReference Include="..\..\Infrastructure\Storage\Storage.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 
 </Project>

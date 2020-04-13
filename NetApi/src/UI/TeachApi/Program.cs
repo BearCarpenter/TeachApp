@@ -21,7 +21,7 @@ namespace TeachApi
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
                 .CreateLogger();
-
+            
             try
             {
                 Log.Information("Getting the motors running...");

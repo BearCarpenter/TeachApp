@@ -16,4 +16,6 @@ WORKDIR /app
 
 COPY --from=sdk /app/out .
 
-ENTRYPOINT ["dotnet", "TeachApi.dll"]
+ENTRYPOINT [ -f /app/settings/appsettings.json ] || mv /app/appsettings.json  /app/settings/appsettings.json \ 
+&& ln -sf /app/settings/appsettings.json . \
+&& dotnet TeachApi.dll
