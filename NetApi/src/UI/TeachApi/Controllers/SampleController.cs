@@ -44,7 +44,7 @@ namespace TeachApi.Controllers
         [Route("GetSampleData")]
         public string GetSampleData()
         {
-            return  "jakieś dane z backendu33";
+            return  "jakieś dane z backendu4";
         }
     }
 }
