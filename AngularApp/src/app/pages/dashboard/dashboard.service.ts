@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
-  private prefixUrl = 'https://www.teach-app.tk/api/';
+  private prefixUrl = 'https://www.teach-app.tk/api/sample';
 
   constructor(private http: HttpClient) { }
 
