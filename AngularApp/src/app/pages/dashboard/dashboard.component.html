@@ -1,22 +1,24 @@
 <div class="row">
   <nb-card class="col-lg-6">
-    <nb-card-header>Pobierz dane:</nb-card-header>
+    <nb-card-header>Pobierz dane z dotnet:</nb-card-header>
     <nb-card-body class="dashboard__card-body--wrapper">
-      <button nbButton
-        class="mb-3"
-        status="info"
-        (click)="onDownloadDataFromBackendClick()">
+      <button nbButton class="mb-3" status="info" (click)="onDownloadDataFromBackendClick()">
         z backendu
       </button>
 
-      <button nbButton
-        class="mb-3"
-        status="info"
-        (click)="onDownloadDataFromDBClick()">
+      <button nbButton class="mb-3" status="info" (click)="onDownloadDataFromDBClick()">
         z backendu z bazy danych
+      </button>
+
+      <button nbButton class="mb-3" status="info" (click)="onDownloadDataFromJavaBackendClick()">
+        z backendu java
+      </button>
+      <button nbButton class="mb-3" status="info" (click)="onDownloadDataFromJavaDBClick()">
+        z backendu java z bazy danych
       </button>
 
       {{ backendResponse | json }}
     </nb-card-body>
+
   </nb-card>
 </div>

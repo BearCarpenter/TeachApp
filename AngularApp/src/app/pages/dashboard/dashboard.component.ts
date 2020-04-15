@@ -20,7 +20,19 @@ export class DashboardComponent {
 
   onDownloadDataFromDBClick() {
     this.dashboardService.getSomeDataFromDB()
+      .subscribe(someData => this.backendResponse = someData[0],
+        (error) => this.backendResponse = error);
+  }
+
+  onDownloadDataFromJavaBackendClick() {
+    this.dashboardService.getSomeDataFromJavaBackend()
       .subscribe(someData => this.backendResponse = someData,
+        (error) => this.backendResponse = error);
+  }
+
+  onDownloadDataFromJavaDBClick() {
+    this.dashboardService.getSomeDataFromJavaDB()
+      .subscribe(someData => this.backendResponse = someData[0],
         (error) => this.backendResponse = error);
   }
 }
