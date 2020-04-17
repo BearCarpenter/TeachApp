@@ -1,6 +1,8 @@
-# docker build -t jojons/ngx-admin-modules:starter -f Dockerfile.ngx-admin-modules .
-FROM node:10.18.0-buster AS deps
-WORKDIR /deps
-COPY ./package.json .
-RUN npm i -g npm@latest && npm install
-# last works withnpm 6.13.4
+# docker build -t jojons/teach-app-node-modules-master:0.1 -f Dockerfile.ngx-admin-modules .
+FROM jojons/ngx-admin-node-modules-starter-kit
+# kiedy node_modules się rozjadą z tymi które są na jojons/ngx-admin-node-modules-... użyj tego do zbudowania obrazu node-modules dla teach-app
+# FROM node:10.18.0-buster AS deps
+# WORKDIR /deps
+# COPY ./package.json .
+# RUN npm i -g npm@latest && npm install
+# # last works withnpm 6.13.4

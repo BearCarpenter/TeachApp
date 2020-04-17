@@ -1,4 +1,4 @@
-FROM jojons/ngx-admin-modules:starter
+FROM jojons/teach-app-node-modules-master
 
 EXPOSE 4200
 

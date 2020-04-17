@@ -28,13 +28,23 @@ Jeśli chcesz zaaktualizować node_modules musisz zaktualizować obraz przechowu
 2. zaktualizować package.json o wpisy które chcesz zmienić.
 3. wykonać w linii komend:
 ```
-docker build -t jojons/ngx-admin-modules:[master/starter] -f Dockerfile.update.node.modules . 
+docker build -t jojons/teach-app-node-modules-[branch na przykład:master]:0.1 -f Dockerfile.update.node.modules . 
 ```
 spowoduje to zbudowanie obrazu z nowymi zaktualizowanymi node_modules, które w przyszłości będą przekopiowane w momencie odpalania kontenera z aplikacją.
+3a.
+sprawdź czy aplikacja działa:
+```
+docker build -t teach-app-npm-executor-[master/demo/starter-kit]:[wersja na przykład:4.0.1.0] -f Dockerfile.[master/demo/starter-kit] .
+```
+następnie sprawdź czy aplikacja działa:
+```
+docker run --rm -it -p 4200:4200 -v ${PWD}:/app --name teach-app-angular teach-app-npm-executor-[master/demo/starter-kit]:[wersja na przykład:4.0.1.0]
 
 4. wypchnąć ten obraz na zdalne repozytorium dockera:
 ```
-docker push jojons/ngx-admin-modules:[master/starter]
+docker push jojons/teach-app-node-modules-[branch na przykład:master]:0.1
+docker image tag jojons/teach-app-node-modules-master:0.1 jojons/teach-app-node-modules-master:latest
+docker push jojons/teach-app-node-modules-master:latest
 ```
 5. odpalić ponownie kontener
 
