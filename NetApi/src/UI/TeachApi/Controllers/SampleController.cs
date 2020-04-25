@@ -11,7 +11,7 @@ using Storage;
 namespace TeachApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("napi/[controller]")]
     public class SampleController : ControllerBase
     {
 
