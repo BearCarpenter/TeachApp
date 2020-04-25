@@ -1,26 +1,30 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ConfigService } from '../../config/config.service';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
+  dotnetApiPrefixUri: string;
+  javaApiPrefixUri: string;
 
-  private prefixUrl = 'https://www.teach-app.tk/api/sample';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, configService: ConfigService) {
+    this.dotnetApiPrefixUri = configService.config.dotnetApiPrefixUri;
+    this.javaApiPrefixUri = configService.config.dotnetApiPrefixUri;
+  }
 
   getSomeDataFromBackend(): Observable<string> {
-    return this.http.get<string>(`${this.prefixUrl}/GetSampleData`);
+    return this.http.get<string>(`${this.dotnetApiPrefixUri}/sample/GetSampleData`);
   }
 
   getSomeDataFromDB(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.prefixUrl}`);
+    return this.http.get<string[]>(`${this.dotnetApiPrefixUri}/sample`);
   }
 
   getSomeDataFromJavaBackend(): Observable<string> {
-    return this.http.get<string>(`https://www.teach-app.tk/japi/sample/GetSampleData`);
+    return this.http.get<string>(`${this.javaApiPrefixUri}/sample/GetSampleData`);
   }
   getSomeDataFromJavaDB(): Observable<string[]> {
-    return this.http.get<string[]>(`https://www.teach-app.tk/japi/sample`);
+    return this.http.get<string[]>(`${this.javaApiPrefixUri}/sample`);
   }
 }
