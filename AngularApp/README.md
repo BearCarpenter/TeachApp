@@ -9,14 +9,23 @@ teachApp\AngularApp: docker-compose up
 lub
 ```
 teachApp\AngularApp: docker build -t teach-app-npm-executor .
+
+dla DockerDesktop:
 teachApp\AngularApp: docker run --rm -it -p 4200:4200 -v ${PWD}:/app --name teach-app-angular teach-app-npm-executor
+
+dla docker VBox:
+1. Dodaj w VirtualBox udostępniany folder AngularApp,
+2. wykonaj w cmd: VBoxManage.exe setextradata YOUR_VM VBoxInternal2/SharedFoldersEnableSymlinksCreate/YOUR_SHARED_FOLDER 1
+np: VBoxManage.exe setextradata default VBoxInternal2/SharedFoldersEnableSymlinksCreate/AngularApp 1
+3. następnie w cmd/powershell:
+teachApp\AngularApp: docker run --rm -it -p 4200:4200 -v /AngularApp:/app --name teach-app-angular teach-app-npm-executor
 ```
 # Praca developerska
 Praca developerska odbywa się poprzez podłączenie vscode do środka kontenera. Jest to wymagane ponieważ na systemie hosta nie istnieje katalog node_modules przez co programowanie w vscode jest prawie nie możliwe (podkreśla na czerwono większość importów z node_modules a co za tym idzie również kod).
 
 W celu developowania należy:
 1. zainstalować dodatek do vscode o nazwie 'Remote Development'
-2. Odpalić kontener - patrz powyższy rozdział "Odpalenie aplikacji"
+2. Odpalić kontener - patrz powyższy rozdział "Uruchomienie aplikacji angularowej"
 3. Kliknąć na zielony przycisk w lewym dolnym i z opcji wybrać 'Attach to Runinng Container'
 
 To powinno odpalić nową instancję vscode podłączoną do uruchomionego kontenera
@@ -55,6 +64,8 @@ docker-compose up
 # W rożnych sytuacjach może być zasadne użycie flagi --build
 ```
 Plik docker-compose.yaml na bazie pliku Dockerfile buduje obraz umożliwiający odpalenie lokalnie aplikacji.
+
+
 
 Na początku pobiera obraz wewnątrz którego znajdują się pobrane node_modules:
 ```
