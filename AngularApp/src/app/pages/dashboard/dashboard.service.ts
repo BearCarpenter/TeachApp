@@ -10,7 +10,7 @@ export class DashboardService {
 
   constructor(private http: HttpClient, configService: ConfigService) {
     this.dotnetApiPrefixUri = configService.config.dotnetApiPrefixUri;
-    this.javaApiPrefixUri = configService.config.dotnetApiPrefixUri;
+    this.javaApiPrefixUri = configService.config.javaApiPrefixUri;
   }
 
   getSomeDataFromBackend(): Observable<string> {
