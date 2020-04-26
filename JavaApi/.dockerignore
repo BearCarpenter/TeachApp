@@ -1,0 +1,6 @@
+.*
+*.iml
+gradle
+src
+# except files for docker
+!build/docker
